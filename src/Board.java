@@ -17,6 +17,7 @@ public class Board {
     public static final int SIZE = 3;
 
 
+
     // Data fields: the instance variables
     // --------------------------------------------------------------------------
     // a matrix to store the tiles on the board in their current configuration
@@ -64,7 +65,6 @@ public class Board {
     private void randomShuffling(int[] array) {
         boolean isSolvable = false;
         while (!isSolvable) {
-            // Arrayi karıştır
             for (int i = 0; i < array.length; i++) {
                 int randIndex = (int) (Math.random() * array.length);
                 int temp = array[i];
