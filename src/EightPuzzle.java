@@ -13,8 +13,7 @@ public class EightPuzzle {
 
         // create a random board for the 8 puzzle
         Board board = new Board();
-        AStarSolver solver = new AStarSolver();
-        String solutionPath = solver.solve(board);
+        String solutionPath = AStarSolver.solve(board);
         System.out.println(solutionPath);
 
         for (int i = 0; i < solutionPath.length(); i++) {
