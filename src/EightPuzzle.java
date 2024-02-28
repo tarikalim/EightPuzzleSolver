@@ -34,30 +34,7 @@ public class EightPuzzle {
             board.draw();
             StdDraw.show();
             StdDraw.pause(500); // H
-            // The main animation and user interaction loop
-            // -----------------------------------------------------------------------
-//      while (true) {
-//         // draw the board, show the resulting drawing and pause for a short time
-//         board.draw();
-//         StdDraw.show();
-//         StdDraw.pause(100); // 100 ms
-//         // if the user has pressed the right arrow key on the keyboard
-//         if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT))
-//            // move the empty cell right
-//            board.moveRight();
-//         // if the user has pressed the left arrow key on the keyboard
-//         if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT))
-//            // move the empty cell left
-//            board.moveLeft();
-//         // if the user has pressed the up arrow key on the keyboard
-//         if (StdDraw.isKeyPressed(KeyEvent.VK_UP))
-//            // move the empty cell up
-//            board.moveUp();
-//         // if the user has pressed the down arrow key on the keyboard
-//         if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN))
-//            // move the empty cell down
-//            board.moveDown();
-//      }
+
 
         }
     }
