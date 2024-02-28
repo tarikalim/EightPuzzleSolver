@@ -62,18 +62,33 @@ public class Board {
     // --------------------------------------------------------------------------
     // An inner method that randomly reorders the elements in a given int array.
     private void randomShuffling(int[] array) {
-        // loop through all the elements in the array
-        for (int i = 0; i < array.length; i++) {
-            // create a random index in the range [0, array.length - 1]
-            int randIndex = (int) (Math.random() * array.length);
-            // swap the current element with the randomly indexed element
-            if (i != randIndex) {
+        boolean isSolvable = false;
+        while (!isSolvable) {
+            // Arrayi karıştır
+            for (int i = 0; i < array.length; i++) {
+                int randIndex = (int) (Math.random() * array.length);
                 int temp = array[i];
                 array[i] = array[randIndex];
                 array[randIndex] = temp;
             }
+            int inversionCount = countInversions(array);
+            isSolvable = inversionCount % 2 == 0;
         }
     }
+
+    // Method to check that given array is solvable or not for the 8 Puzzle array
+    private int countInversions(int[] array) {
+        int inversionCount = 0;
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[i] > array[j] && array[i] != 0 && array[j] != 0) {
+                    inversionCount++;
+                }
+            }
+        }
+        return inversionCount;
+    }
+
 
     public void moveRight() {
         // replace the empty cell with the tile on its right
