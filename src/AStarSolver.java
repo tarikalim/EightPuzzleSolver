@@ -53,6 +53,13 @@ public class AStarSolver {
             return nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE;
         }
 
+
+        static void swap(int[][] board, int x1, int y1, int x2, int y2) {
+            int temp = board[x1][y1];
+            board[x1][y1] = board[x2][y2];
+            board[x2][y2] = temp;
+        }
+
         List<State> getSuccessors() {
             List<State> successors = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
@@ -65,12 +72,6 @@ public class AStarSolver {
                 }
             }
             return successors;
-        }
-
-        static void swap(int[][] board, int x1, int y1, int x2, int y2) {
-            int temp = board[x1][y1];
-            board[x1][y1] = board[x2][y2];
-            board[x2][y2] = temp;
         }
 
         int cost() {
