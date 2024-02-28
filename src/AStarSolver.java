@@ -106,7 +106,7 @@ public class AStarSolver {
         }
     }
 
-    public String solve(Board board) {
+    public static String solve(Board board) {
         int[][] initialStateArray = board.getCurrentBoardState();
         PriorityQueue<State> frontier = new PriorityQueue<>(Comparator.comparingInt(State::cost));
         Set<State> explored = new HashSet<>();
