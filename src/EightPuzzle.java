@@ -33,7 +33,7 @@ public class EightPuzzle {
             }
             board.draw();
             StdDraw.show();
-            StdDraw.pause(500); // H
+            StdDraw.pause(500);
 
 
         }

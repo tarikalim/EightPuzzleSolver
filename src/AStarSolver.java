@@ -76,12 +76,39 @@ public class AStarSolver {
         int cost() {
             return moves + manhattan();
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null || getClass() != obj.getClass())
+                return false;
+            State other = (State) obj;
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    if (this.board[i][j] != other.board[i][j])
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    hash = 31 * hash + board[i][j];
+                }
+            }
+            return hash;
+        }
     }
 
     public String solve(Board board) {
         int[][] initialStateArray = board.getCurrentBoardState();
         PriorityQueue<State> frontier = new PriorityQueue<>(Comparator.comparingInt(State::cost));
-        Set<String> explored = new HashSet<>();
+        Set<State> explored = new HashSet<>();
 
         int x = 0, y = 0;
         for (int i = 0; i < SIZE; i++) {
@@ -103,19 +130,15 @@ public class AStarSolver {
                 return state.path;
             }
 
-            String boardString = Arrays.deepToString(state.board);
-            if (explored.contains(boardString)) continue;
-            explored.add(boardString);
+            if (explored.contains(state)) continue;
+            explored.add(state);
 
             for (State successor : state.getSuccessors()) {
-                if (!explored.contains(Arrays.deepToString(successor.board))) {
+                if (!explored.contains(successor)) {
                     frontier.add(successor);
                 }
             }
         }
-
         return "No solution";
     }
-
-
 }
