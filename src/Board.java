@@ -8,9 +8,9 @@ public class Board {
     // Data fields: the class variables (actually constants here)
     // --------------------------------------------------------------------------
     // the background color used for the empty cell on the board
-    private static final Color backgroundColor = new Color(145, 234, 255);
+    public static final Color backgroundColor = new Color(145, 234, 255);
     // the color used for drawing the boundaries around the board
-    private static final Color boxColor = new Color(31, 160, 239);
+    public static final Color boxColor = new Color(31, 160, 239);
     // the line thickness value for the boundaries around the board
     // (it is twice the value used for the tiles as only half of it is visible)
     private static final double lineThickness = 0.02;
