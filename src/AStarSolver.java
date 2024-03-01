@@ -1,16 +1,18 @@
 import java.util.*;
 
 public class AStarSolver {
-    public static final int SIZE = 3;
-    public static final int[] dx = {-1, 1, 0, 0};
-    public static final int[] dy = {0, 0, -1, 1};
-    public static final String DIRECTIONS = "UDLR";
+    private static final int SIZE = 3;
+    private static final int[] MOVE_X = {-1, 1, 0, 0};
+    private static final int[] MOVE_Y = {0, 0, -1, 1};
+    private static final int DIRECTIONS_COUNT = 4;
+    private static final String MOVE_DIRECTIONS = "UDLR";
 
     static class State {
-        int[][] board;
-        int x, y;
-        int moves;
-        String path;
+        private  int[][] board;
+        private  int x;
+        private  int y;
+        private  int moves;
+        private  String path;
 
         State(int[][] board, int x, int y, int moves, String path) {
             this.board = new int[SIZE][SIZE];
@@ -23,50 +25,14 @@ public class AStarSolver {
             this.path = path;
         }
 
-        boolean isGoal() {
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    if (board[i][j] != 0 && board[i][j] != i * SIZE + j + 1) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        int manhattan() {
-            int distance = 0;
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    int value = board[i][j];
-                    if (value != 0) {
-                        int targetX = (value - 1) / SIZE;
-                        int targetY = (value - 1) % SIZE;
-                        distance += Math.abs(i - targetX) + Math.abs(j - targetY);
-                    }
-                }
-            }
-            return distance;
-        }
-
-        boolean isValid(int nx, int ny) {
-            return nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE;
-        }
-
-
-        static void swap(int[][] board, int x1, int y1, int x2, int y2) {
-            int temp = board[x1][y1];
-            board[x1][y1] = board[x2][y2];
-            board[x2][y2] = temp;
-        }
 
         List<State> getSuccessors() {
             List<State> successors = new ArrayList<>();
-            for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+            for (int i = 0; i < DIRECTIONS_COUNT; i++) {
+                int nx = x + MOVE_X[i];
+                int ny = y + MOVE_Y[i];
                 if (isValid(nx, ny)) {
-                    State newState = new State(board, nx, ny, moves + 1, path + DIRECTIONS.charAt(i));
+                    State newState = new State(board, nx, ny, moves + 1, path + MOVE_DIRECTIONS.charAt(i));
                     swap(newState.board, x, y, nx, ny);
                     successors.add(newState);
                 }
@@ -75,7 +41,7 @@ public class AStarSolver {
         }
 
         int cost() {
-            return moves + manhattan();
+            return moves + manhattan(board);
         }
 
         @Override
@@ -127,7 +93,7 @@ public class AStarSolver {
 
         while (!frontier.isEmpty()) {
             State state = frontier.poll();
-            if (state.isGoal()) {
+            if (isGoal(state.board)) {
                 return state.path;
             }
 
@@ -142,4 +108,42 @@ public class AStarSolver {
         }
         return "No solution";
     }
+
+    public static boolean isValid(int nx, int ny) {
+        return nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE;
+    }
+
+    public static void swap(int[][] board, int x1, int y1, int x2, int y2) {
+        int temp = board[x1][y1];
+        board[x1][y1] = board[x2][y2];
+        board[x2][y2] = temp;
+    }
+
+    public static int manhattan(int[][] board) {
+        int distance = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                int value = board[i][j];
+                if (value != 0) {
+                    int targetX = (value - 1) / SIZE;
+                    int targetY = (value - 1) % SIZE;
+                    distance += Math.abs(i - targetX) + Math.abs(j - targetY);
+                }
+            }
+        }
+        return distance;
+    }
+
+    public static boolean isGoal(int[][] board) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j] != 0 && board[i][j] != i * SIZE + j + 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
 }
