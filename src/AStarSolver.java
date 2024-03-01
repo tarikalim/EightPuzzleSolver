@@ -1,4 +1,5 @@
 // A* solver for the given Board configuration
+
 import java.util.*;
 
 public class AStarSolver {
@@ -9,12 +10,12 @@ public class AStarSolver {
     private static final String MOVE_DIRECTIONS = "UDLR"; // direction string to kee track valid solution path
 
     // inner class to represent every possible Board configuration
-    static class State {
-        private  int[][] board;
-        private  int x;
-        private  int y;
-        private  int moves;
-        private  String path;
+    static class State implements Comparable<State> {
+        private int[][] board;
+        private int x;
+        private int y;
+        private int moves;
+        private String path;
 
         // Constructor for the State class
         State(int[][] board, int x, int y, int moves, String path) {
@@ -42,10 +43,12 @@ public class AStarSolver {
             }
             return successors;
         }
+
         // cost of this state
         int cost() {
             return moves + manhattan(board);
         }
+
         // equals override to compare two states.
         @Override
         public boolean equals(Object obj) {
@@ -62,6 +65,7 @@ public class AStarSolver {
             }
             return true;
         }
+
         // hashcode override to generate unique hash code for the state config.
         @Override
         public int hashCode() {
@@ -73,12 +77,20 @@ public class AStarSolver {
             }
             return hash;
         }
+        // override method to compare State,
+        // in this way we don't need to call method "cost" every time
+        @Override
+        public int compareTo(State o) {
+            return Integer.compare(this.cost(), o.cost());
+        }
     }
-    // method to implement A* algorithm, take a Board object and generate a State from that Board config.
+
+    // method to implement A* algorithm,
+    // take a Board object and generate a State from that Board config.
     // use helper method to solve problem.
     public static String solve(Board board) {
         int[][] initialStateArray = board.getCurrentBoardState();
-        PriorityQueue<State> frontier = new PriorityQueue<>(Comparator.comparingInt(State::cost));
+        PriorityQueue<State> frontier = new PriorityQueue<>();
         Set<State> explored = new HashSet<>();
 
         int x = 0, y = 0;
@@ -112,18 +124,21 @@ public class AStarSolver {
         }
         return "No solution";
     }
+
     // method to check whether move is valid or not.
-    public static boolean isValid(int nx, int ny) {
+    private static boolean isValid(int nx, int ny) {
         return nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE;
     }
+
     // make swap on the given board using array representation of that board.
-    public static void swap(int[][] board, int x1, int y1, int x2, int y2) {
+    private static void swap(int[][] board, int x1, int y1, int x2, int y2) {
         int temp = board[x1][y1];
         board[x1][y1] = board[x2][y2];
         board[x2][y2] = temp;
     }
+
     // Calculate the manhattan distance for the given board config.
-    public static int manhattan(int[][] board) {
+    private static int manhattan(int[][] board) {
         int distance = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -137,8 +152,9 @@ public class AStarSolver {
         }
         return distance;
     }
+
     // check that given array is the goal board configuration or not.
-    public static boolean isGoal(int[][] board) {
+    private static boolean isGoal(int[][] board) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j] != 0 && board[i][j] != i * SIZE + j + 1) {
