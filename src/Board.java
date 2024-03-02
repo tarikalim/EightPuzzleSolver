@@ -17,7 +17,6 @@ public class Board {
     public static final int SIZE = 3;
 
 
-
     // Data fields: the instance variables
     // --------------------------------------------------------------------------
     // a matrix to store the tiles on the board in their current configuration
@@ -56,6 +55,20 @@ public class Board {
                 // increase the array index by 1
                 arrayIndex++;
             }
+    }
+
+    // constructor method to copy created Board.
+    public Board(Board otherBoard) {
+        this.tiles = new Tile[otherBoard.tiles.length][otherBoard.tiles[0].length];
+        for (int i = 0; i < otherBoard.tiles.length; i++) {
+            for (int j = 0; j < otherBoard.tiles[i].length; j++) {
+                if (otherBoard.tiles[i][j] != null) {
+                    this.tiles[i][j] = new Tile(otherBoard.tiles[i][j]);
+                }
+            }
+        }
+        this.emptyCellRow = otherBoard.emptyCellRow;
+        this.emptyCellCol = otherBoard.emptyCellCol;
     }
 
 
