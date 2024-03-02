@@ -23,7 +23,10 @@ public class Tile {
         // set the number based on the given value
         this.number = number;
     }
-
+    // constructor method to copy tiles
+    public Tile(Tile otherTile) {
+        this.number = otherTile.number;
+    }
     public int getNumber() {
         return this.number;
     }
