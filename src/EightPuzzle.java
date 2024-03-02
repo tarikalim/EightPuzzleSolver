@@ -1,31 +1,62 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
-// A program that partially implements the 8 puzzle.
 public class EightPuzzle {
-    // The main method is the entry point where the program starts execution.
+    // default parameters to use in class
+    private static final int CANVAS_SIZE = 800;
+    private static final double SCALE_MIN = 0.5, SCALE_MAX = 3.5;
+    private static final int PAUSE_DURATION = 200;
+    private static final Color BACKGROUND_COLOR = new Color(15, 76, 129);
+    private static final Font TEXT_FONT = new Font("Arial", Font.BOLD, 20);
+
     public static void main(String[] args) {
-        // StdDraw setup
-        // -----------------------------------------------------------------------
-        // set the size of the canvas (the drawing area) in pixels
-        StdDraw.setCanvasSize(800, 800);
-        // set the range of both x and y values for the drawing canvas
-        StdDraw.setScale(0.5, 3.5);
-        // enable double buffering to animate moving the tiles on the board
-        StdDraw.enableDoubleBuffering();
-
-        // create a random board for the 8 puzzle
+        setupStdDraw();
+        //  create main board object
         Board board = new Board();
-        String solutionPath = AStarSolver.solve(board);
-        //   System.out.println(solutionPath);
+        // copy first board to find solution,
+        // we need this because after user play with board,
+        // we need to use first state of the board to solve.
+        Board copyBoard = new Board(board);
 
-
-        for (int i = 0; i < solutionPath.length(); i++) {
-            StdDraw.setPenColor(Color.BLACK);
-            StdDraw.text(1.90, 2, " Move: " + solutionPath.charAt(i));
+        // while loop to let user play on the board,
+        // after user press enter, break the loop.
+        while (true) {
+            board.draw();
             StdDraw.show();
-            StdDraw.pause(750);
+            userPlay(board);
+            if (StdDraw.isKeyPressed(KeyEvent.VK_ENTER)) {
+                StdDraw.pause(PAUSE_DURATION);
+                break;
+            }
+        }
 
-            switch (solutionPath.charAt(i)) {
+        // after user press enter, break while loop and program will solve copy board and show the solution
+        StdDraw.clear(BACKGROUND_COLOR);
+        String solutionPath = AStarSolver.solve(copyBoard); // use copy board to find solution
+        showSolution(copyBoard, solutionPath); // show solution
+    }
+
+
+    // method to let user play on board
+    private static void userPlay(Board board) {
+        if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)) {
+            board.moveRight();
+        } else if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)) {
+            board.moveLeft();
+        } else if (StdDraw.isKeyPressed(KeyEvent.VK_UP)) {
+            board.moveUp();
+        } else if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
+            board.moveDown();
+        }
+        StdDraw.pause(PAUSE_DURATION);
+    }
+
+    // method to show solution on the board
+    private static void showSolution(Board board, String solutionPath) {
+        // for loop to visualize solution using Board class move methods
+        // and solutionPath string to manage move methods.
+        for (char move : solutionPath.toCharArray()) {
+            switch (move) {
                 case 'U':
                     board.moveUp();
                     break;
@@ -39,16 +70,30 @@ public class EightPuzzle {
                     board.moveRight();
                     break;
             }
+            // after each solution step showed on the board, show step as a string on the screen
+            // and draw the board using Board classes draw func.
             board.draw();
+            StdDraw.setPenColor(Color.BLACK);
+            StdDraw.setFont(TEXT_FONT);
+            StdDraw.text(1.97, 1.80, "Move: " + move);
             StdDraw.show();
             StdDraw.pause(750);
         }
-        StdDraw.clear(StdDraw.BLUE);
-        StdDraw.setPenColor(Color.BLACK);
-        Font font = new Font("Arial", Font.BOLD, 20);
-        StdDraw.setFont(font);
-        StdDraw.text(1.90, 2, " Solution: " + solutionPath);
-        StdDraw.show();
 
+        // show solution path as a string after drawing solution
+        StdDraw.clear(BACKGROUND_COLOR);
+        StdDraw.setPenColor(Color.BLACK);
+        StdDraw.setFont(TEXT_FONT);
+        StdDraw.text(1.95, 2, "Solution: " + solutionPath);
+        StdDraw.show();
     }
+
+    // method to set up Std draw configuration
+    private static void setupStdDraw() {
+        StdDraw.setCanvasSize(CANVAS_SIZE, CANVAS_SIZE);
+        StdDraw.setScale(SCALE_MIN, SCALE_MAX);
+        StdDraw.enableDoubleBuffering();
+    }
+
+
 }
