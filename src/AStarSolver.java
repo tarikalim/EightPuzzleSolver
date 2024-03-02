@@ -1,6 +1,8 @@
 // A* solver for the given Board configuration
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class AStarSolver {
     private static final int SIZE = 3; // size of the board (3x3)
@@ -77,6 +79,7 @@ public class AStarSolver {
             }
             return hash;
         }
+
         // override method to compare State,
         // in this way we don't need to call method "cost" every time
         @Override
@@ -93,36 +96,52 @@ public class AStarSolver {
         PriorityQueue<State> frontier = new PriorityQueue<>();
         Set<State> explored = new HashSet<>();
 
-        int x = 0, y = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (initialStateArray[i][j] == 0) {
-                    x = i;
-                    y = j;
-                    break;
-                }
-            }
-        }
-
-        State initialState = new State(initialStateArray, x, y, 0, "");
+        Point emptyCellPosition = findInitialEmptyCellPosition(initialStateArray);
+        State initialState = new State(initialStateArray, emptyCellPosition.x, emptyCellPosition.y, 0, "");
         frontier.add(initialState);
 
         while (!frontier.isEmpty()) {
-            State state = frontier.poll();
-            if (isGoal(state.board)) {
-                return state.path;
+            State currentState = frontier.poll();
+            if (isGoal(currentState.board)) {
+                return currentState.path;
             }
+            if (!explored.contains(currentState)) {
+                explored.add(currentState);
+                exploreSuccessors(currentState, frontier, explored);
+            }
+        }
+        return null;
+    }
 
-            if (explored.contains(state)) continue;
-            explored.add(state);
-
-            for (State successor : state.getSuccessors()) {
-                if (!explored.contains(successor)) {
-                    frontier.add(successor);
+    private static Point findInitialEmptyCellPosition(int[][] initialStateArray) {
+        for (int i = 0; i < initialStateArray.length; i++) {
+            for (int j = 0; j < initialStateArray[i].length; j++) {
+                if (initialStateArray[i][j] == 0) {
+                    return new Point(i, j);
                 }
             }
         }
-        return "No solution";
+        return null;
+    }
+
+    private static void exploreSuccessors(State currentState, PriorityQueue<State> frontier, Set<State> explored) {
+        for (State successor : currentState.getSuccessors()) {
+            if (!explored.contains(successor) && !frontier.contains(successor)) {
+                frontier.add(successor);
+            }
+        }
+    }
+
+    // check that given array is the goal board configuration or not.
+    private static boolean isGoal(int[][] board) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (board[i][j] != 0 && board[i][j] != i * SIZE + j + 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     // method to check whether move is valid or not.
@@ -151,18 +170,6 @@ public class AStarSolver {
             }
         }
         return distance;
-    }
-
-    // check that given array is the goal board configuration or not.
-    private static boolean isGoal(int[][] board) {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (board[i][j] != 0 && board[i][j] != i * SIZE + j + 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
 
