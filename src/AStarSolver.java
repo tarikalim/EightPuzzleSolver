@@ -1,80 +1,23 @@
-// A* solver for the given Board configuration
-
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class AStarSolver {
-    private static final int SIZE = 3; // size of the board. Usage in 2d array: [SIZE]X[SIZE]
+    public static final int SIZE = 3; // size of the board. Usage in 2d array: [SIZE]X[SIZE]
+    // since 2D representation of arrays in computers different then normal math, we need to understand that.
+// first version of board
+//     0,0 | 0,1 | 0,2
+//     ----------------
+//     1,0 | Empty| 1,2
+//     ----------------
+//     2,0 | 2,1 | 2,2
+// if we want to move empty cell up than we need to change 1,1 to 0,1
+// so X = -1 and Y= 0 means that move up.
+
     private static final int[] MOVE_X = {-1, 1, 0, 0}; // horizontal movement
     private static final int[] MOVE_Y = {0, 0, -1, 1}; // vertical movement
     private static final int DIRECTIONS_COUNT = 4; // possible max moves.
-    private static final String MOVE_DIRECTIONS = "UDLR"; // direction string to kee track valid solution path
-
-    // inner class to represent every possible Board configuration
-    static class State implements Comparable<State> {
-        public int[][] board;
-        public int x;
-        public int y;
-        public int moves;
-        public String path;
-
-
-        // Constructor for the State class
-        State(int[][] board, int x, int y, int moves, String path) {
-            this.board = new int[SIZE][SIZE];
-            for (int i = 0; i < SIZE; i++) {
-                this.board[i] = Arrays.copyOf(board[i], SIZE);
-            }
-            this.x = x;
-            this.y = y;
-            this.moves = moves;
-            this.path = path;
-        }
-
-
-        // cost of this state
-        int cost() {
-            return moves + manhattan(board);
-        }
-
-        // equals override to compare two states.
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null || getClass() != obj.getClass())
-                return false;
-            State other = (State) obj;
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    if (this.board[i][j] != other.board[i][j])
-                        return false;
-                }
-            }
-            return true;
-        }
-
-        // hashcode override to generate unique hash code for the state config.
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    hash = 31 * hash + board[i][j];
-                }
-            }
-            return hash;
-        }
-
-        // override method to compare State,
-        // in this way we specified the priority of State object
-        // when we add them to priority queue.
-        @Override
-        public int compareTo(State o) {
-            return Integer.compare(this.cost(), o.cost());
-        }
-    }
+    private static final String MOVE_DIRECTIONS = "UDLR"; // possible directions according to X and Y changes
 
     // method to implement A* algorithm,
     // take a Board object and generate a State from that Board config.
@@ -91,8 +34,8 @@ public class AStarSolver {
 
         while (!frontier.isEmpty()) {
             State currentState = frontier.poll();
-            if (isGoal(currentState.board)) {
-                return currentState.path;
+            if (isGoal(currentState.getBoard())) {
+                return currentState.getPath();
             }
             if (!explored.contains(currentState)) {
                 explored.add(currentState);
@@ -117,11 +60,11 @@ public class AStarSolver {
     public static List<State> getSuccessors(State currentState) {
         List<State> successors = new ArrayList<>();
         for (int i = 0; i < DIRECTIONS_COUNT; i++) {
-            int nx = currentState.x + MOVE_X[i];
-            int ny = currentState.y + MOVE_Y[i];
+            int nx = currentState.getX() + MOVE_X[i];
+            int ny = currentState.getY() + MOVE_Y[i];
             if (isValid(nx, ny)) {
-                State newState = new State(currentState.board, nx, ny, currentState.moves + 1, currentState.path + MOVE_DIRECTIONS.charAt(i));
-                swap(newState.board, currentState.x, currentState.y, nx, ny);
+                State newState = new State(currentState.getBoard(), nx, ny, currentState.getMoves() + 1, currentState.getPath() + MOVE_DIRECTIONS.charAt(i));
+                swap(newState.getBoard(), currentState.getX(), currentState.getY(), nx, ny);
                 successors.add(newState);
             }
         }
