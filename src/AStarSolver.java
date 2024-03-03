@@ -12,7 +12,8 @@ public class AStarSolver {
 //     ----------------
 //     2,0 | 2,1 | 2,2
 // if we want to move empty cell up than we need to change 1,1 to 0,1
-// so X = -1 and Y= 0 means that move up.
+// so X = -1 and Y= 0 means that move up. because 2d array logic is different than normal math,
+// understanding this structure is important
 
     private static final int[] MOVE_X = {-1, 1, 0, 0}; // horizontal movement
     private static final int[] MOVE_Y = {0, 0, -1, 1}; // vertical movement
