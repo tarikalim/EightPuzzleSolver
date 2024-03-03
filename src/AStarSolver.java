@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.List;
 
 public class AStarSolver {
-    private static final int SIZE = 3; // size of the board (3x3)
+    private static final int SIZE = 3; // size of the board. Usage in 2d array: [SIZE]X[SIZE]
     private static final int[] MOVE_X = {-1, 1, 0, 0}; // horizontal movement
     private static final int[] MOVE_Y = {0, 0, -1, 1}; // vertical movement
     private static final int DIRECTIONS_COUNT = 4; // possible max moves.
@@ -13,11 +13,12 @@ public class AStarSolver {
 
     // inner class to represent every possible Board configuration
     static class State implements Comparable<State> {
-        private int[][] board;
-        private int x;
-        private int y;
-        private int moves;
-        private String path;
+        public int[][] board;
+        public int x;
+        public int y;
+        public int moves;
+        public String path;
+
 
         // Constructor for the State class
         State(int[][] board, int x, int y, int moves, String path) {
@@ -31,20 +32,6 @@ public class AStarSolver {
             this.path = path;
         }
 
-        // method to returns a list of all valid states from this state.
-        List<State> getSuccessors() {
-            List<State> successors = new ArrayList<>();
-            for (int i = 0; i < DIRECTIONS_COUNT; i++) {
-                int nx = x + MOVE_X[i];
-                int ny = y + MOVE_Y[i];
-                if (isValid(nx, ny)) {
-                    State newState = new State(board, nx, ny, moves + 1, path + MOVE_DIRECTIONS.charAt(i));
-                    swap(newState.board, x, y, nx, ny);
-                    successors.add(newState);
-                }
-            }
-            return successors;
-        }
 
         // cost of this state
         int cost() {
@@ -81,7 +68,8 @@ public class AStarSolver {
         }
 
         // override method to compare State,
-        // in this way we don't need to call method "cost" every time
+        // in this way we specified the priority of State object
+        // when we add them to priority queue.
         @Override
         public int compareTo(State o) {
             return Integer.compare(this.cost(), o.cost());
@@ -97,6 +85,7 @@ public class AStarSolver {
         Set<State> explored = new HashSet<>();
 
         Point emptyCellPosition = findInitialEmptyCellPosition(initialStateArray);
+        assert emptyCellPosition != null;
         State initialState = new State(initialStateArray, emptyCellPosition.x, emptyCellPosition.y, 0, "");
         frontier.add(initialState);
 
@@ -113,7 +102,7 @@ public class AStarSolver {
         return null;
     }
 
-    private static Point findInitialEmptyCellPosition(int[][] initialStateArray) {
+    public static Point findInitialEmptyCellPosition(int[][] initialStateArray) {
         for (int i = 0; i < initialStateArray.length; i++) {
             for (int j = 0; j < initialStateArray[i].length; j++) {
                 if (initialStateArray[i][j] == 0) {
@@ -124,16 +113,33 @@ public class AStarSolver {
         return null;
     }
 
-    private static void exploreSuccessors(State currentState, PriorityQueue<State> frontier, Set<State> explored) {
-        for (State successor : currentState.getSuccessors()) {
+
+    public static List<State> getSuccessors(State currentState) {
+        List<State> successors = new ArrayList<>();
+        for (int i = 0; i < DIRECTIONS_COUNT; i++) {
+            int nx = currentState.x + MOVE_X[i];
+            int ny = currentState.y + MOVE_Y[i];
+            if (isValid(nx, ny)) {
+                State newState = new State(currentState.board, nx, ny, currentState.moves + 1, currentState.path + MOVE_DIRECTIONS.charAt(i));
+                swap(newState.board, currentState.x, currentState.y, nx, ny);
+                successors.add(newState);
+            }
+        }
+        return successors;
+    }
+
+    public static void exploreSuccessors(State currentState, PriorityQueue<State> frontier, Set<State> explored) {
+        List<State> successors = getSuccessors(currentState);
+        for (State successor : successors) {
             if (!explored.contains(successor) && !frontier.contains(successor)) {
                 frontier.add(successor);
             }
         }
     }
 
+
     // check that given array is the goal board configuration or not.
-    private static boolean isGoal(int[][] board) {
+    public static boolean isGoal(int[][] board) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (board[i][j] != 0 && board[i][j] != i * SIZE + j + 1) {
@@ -150,14 +156,14 @@ public class AStarSolver {
     }
 
     // make swap on the given board using array representation of that board.
-    private static void swap(int[][] board, int x1, int y1, int x2, int y2) {
+    public static void swap(int[][] board, int x1, int y1, int x2, int y2) {
         int temp = board[x1][y1];
         board[x1][y1] = board[x2][y2];
         board[x2][y2] = temp;
     }
 
     // Calculate the manhattan distance for the given board config.
-    private static int manhattan(int[][] board) {
+    public static int manhattan(int[][] board) {
         int distance = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
