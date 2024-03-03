@@ -73,14 +73,14 @@ public class Board {
     }
 
 //     test constructor for the Board object
-    public Board(int[][] initialTiles) {
-        this.tiles = new Tile[initialTiles.length][initialTiles[0].length];
-        for (int i = 0; i < initialTiles.length; i++) {
-            for (int j = 0; j < initialTiles[i].length; j++) {
-                this.tiles[i][j] = new Tile(initialTiles[i][j]);
-            }
-        }
-    }
+//    public Board(int[][] initialTiles) {
+//        this.tiles = new Tile[initialTiles.length][initialTiles[0].length];
+//        for (int i = 0; i < initialTiles.length; i++) {
+//            for (int j = 0; j < initialTiles[i].length; j++) {
+//                this.tiles[i][j] = new Tile(initialTiles[i][j]);
+//            }
+//        }
+//    }
 
 
     // The method(s) of the Board class
