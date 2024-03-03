@@ -6,9 +6,9 @@
 //public class UnitTests {
 //    public static void main(String[] args) {
 //        int[][] testTiles = {
-//                {1, 2, 3},
-//                {4, 5, 6},
-//                {0, 7, 8}
+//                {0, 1, 3},
+//                {4, 2, 5},
+//                {7, 8, 6}
 //        };
 //        int[][] testTiles2 = {
 //                {1, 2, 3},
@@ -19,6 +19,9 @@
 //        Board testBoard = new Board(testTiles);
 //        String solution = AStarSolver.solve(testBoard);
 //        System.out.println("Shortest path: " + solution);
+//        Board testBoard2 = new Board(testTiles2);
+//        String solution2 = AStarSolver.solve(testBoard2);
+//        System.out.println("Short path board 2" + solution2);
 //
 //        // Test for the empty cell finder method.
 //        Point result1 = AStarSolver.findInitialEmptyCellPosition(testTiles);
@@ -32,7 +35,7 @@
 //        int manhattan2 = AStarSolver.manhattan(testTiles2);
 //        System.out.println(manhattan2);
 //
-//        //
+//
 //
 //    }
 //}
