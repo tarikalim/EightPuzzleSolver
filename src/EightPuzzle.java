@@ -5,7 +5,7 @@ public class EightPuzzle {
     // default parameters to use in class
     private static final int CANVAS_SIZE = 800;
     private static final double SCALE_MIN = 0.5, SCALE_MAX = 3.5;
-    private static final int PAUSE_DURATION = 200;
+    private static final int PAUSE_DURATION = 100;
     private static final Color BACKGROUND_COLOR = new Color(15, 76, 129);
     private static final Font TEXT_FONT = new Font("Arial", Font.BOLD, 20);
 
