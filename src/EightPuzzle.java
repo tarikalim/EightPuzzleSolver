@@ -33,6 +33,7 @@ public class EightPuzzle {
         // after user press enter, break while loop and program will solve copy board and show the solution
         StdDraw.clear(BACKGROUND_COLOR);
         String solutionPath = AStarSolver.solve(copyBoard); // use copy board to find solution
+        assert solutionPath != null;
         showSolution(copyBoard, solutionPath); // show solution
     }
 
