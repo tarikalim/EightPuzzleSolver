@@ -10,23 +10,43 @@ public class EightPuzzle {
     private static final Color BACKGROUND_COLOR = new Color(15, 76, 129);
     private static final Font TEXT_FONT = new Font("Arial", Font.BOLD, 20);
 
+    private static String chosenHeuristic;
+    private static final String INFO_TEXT = "Welcome to 8 Puzzle Problem\n" +
+            "To solve puzzle with manhattan distance press '1'\n" +
+            "To solve puzzle with Misplaced Tiles press '2'\n" +
+            "After selecting one of them, you can see the puzzle\n" +
+            "You can play with board using arrow keys\n" +
+            "After you play, press 'ENTER' to see solution according to your heuristic function\n" +
+            "Program will visualise the solution and after that you can see the exact solution path. ";
     public static void main(String[] args) {
         setupStdDraw();
+        StdDraw.clear(BACKGROUND_COLOR);
+        StdDraw.setPenColor(Color.BLACK);
+        StdDraw.setFont(TEXT_FONT);
+        drawMultilineText(INFO_TEXT, 2, 2.5, 0.1);
+        StdDraw.show();
+
         //  create main board object
+
         Board board = new Board();
+
         // copy first board to find solution,
         // we need this because after user play with board,
         // we need to use first state of the board to solve.
         Board copyBoard = new Board(board);
+
         // for making choice between manhattan and misplaced heuristic functions
         Function<int[][], Integer> heuristic = null;
 
         while (heuristic == null) {
             if (StdDraw.isKeyPressed(KeyEvent.VK_1)) {
+
                 heuristic = HeuristicFunctions::manhattan;
                 StdDraw.pause(PAUSE_DURATION);
+                chosenHeuristic = "manhattan";
             } else if (StdDraw.isKeyPressed(KeyEvent.VK_2)) {
                 heuristic = HeuristicFunctions::misplacedTiles;
+                chosenHeuristic = "Misplaced Tiles";
                 StdDraw.pause(PAUSE_DURATION);
             }
         }
@@ -95,11 +115,11 @@ public class EightPuzzle {
             StdDraw.pause(750);
         }
 
-        // show solution path as a string after drawing solution
+        // show complete solution path as a string after drawing solution
         StdDraw.clear(BACKGROUND_COLOR);
         StdDraw.setPenColor(Color.BLACK);
         StdDraw.setFont(TEXT_FONT);
-        StdDraw.text(1.95, 2, "Solution: " + solutionPath);
+        StdDraw.text(1.95, 2, "Solution with "+ chosenHeuristic+ " :" + solutionPath);
         StdDraw.show();
     }
 
@@ -109,6 +129,15 @@ public class EightPuzzle {
         StdDraw.setScale(SCALE_MIN, SCALE_MAX);
         StdDraw.enableDoubleBuffering();
     }
+    // method to split info text row by row
+    // because Std draw.text doesn't support this functionality.
+    public static void drawMultilineText(String text, double x, double y, double lineHeight) {
+        String[] lines = text.split("\n");
+        for (int i = 0; i < lines.length; i++) {
+            StdDraw.text(x, y - i * lineHeight, lines[i]);
+        }
+    }
+
 
 
 }
