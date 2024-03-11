@@ -12,7 +12,7 @@ public class EightPuzzle {
 
     private static String chosenHeuristic;
     private static final String INFO_TEXT = "Welcome to 8 Puzzle Problem\n" +
-            "To solve puzzle with manhattan distance press '1'\n" +
+            "To solve puzzle with Manhattan Distance press '1'\n" +
             "To solve puzzle with Misplaced Tiles press '2'\n" +
             "After selecting one of them, you can see the puzzle\n" +
             "You can play with board using arrow keys\n" +
