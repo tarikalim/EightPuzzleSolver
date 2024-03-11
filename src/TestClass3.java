@@ -29,7 +29,7 @@ public class TestClass3 {
         String solutionWithMisPlacedTiles = AStarSolver.solve(testBoardWithMisPlacedTiles);
         long endTimeWithMisPlacedTiles = System.nanoTime();
 
-        long durationWithMissPlacedTiles = (endTimeWithMisPlacedTiles - startTimeWithMisPlacedTiles); // Nanosaniye olarak süre
+        long durationWithMissPlacedTiles = (endTimeWithMisPlacedTiles - startTimeWithMisPlacedTiles);
         System.out.println("Duration with Misplaced Tile: " + durationWithMissPlacedTiles + " nanosecond. Solution path: " + solutionWithMisPlacedTiles);
 
 
