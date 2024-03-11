@@ -1,17 +1,21 @@
-import java.awt.*;
 import java.util.Arrays;
+import java.util.function.Function;
 
 public class State implements Comparable<State> {
+    private static final int SIZE = 3; // size of the board. Usage in 2d array: [SIZE]X[SIZE]
+
     private int[][] board;
     private int x;
     private int y;
     private int moves;
     private String path;
 
+    public static Function<int[][], Integer> heuristicFunction = board -> 0;
+
     public State(int[][] board, int x, int y, int moves, String path) {
-        this.board = new int[AStarSolver.SIZE][AStarSolver.SIZE];
-        for (int i = 0; i < AStarSolver.SIZE; i++) {
-            this.board[i] = Arrays.copyOf(board[i], AStarSolver.SIZE);
+        this.board = new int[SIZE][SIZE];
+        for (int i = 0; i < SIZE; i++) {
+            this.board[i] = Arrays.copyOf(board[i], SIZE);
         }
         this.x = x;
         this.y = y;
@@ -40,7 +44,7 @@ public class State implements Comparable<State> {
     }
 
     public int cost() {
-        return moves + AStarSolver.manhattan(board);
+        return moves + heuristicFunction.apply(board);
     }
 
     // equals override to compare two states.
@@ -51,8 +55,8 @@ public class State implements Comparable<State> {
         if (obj == null || getClass() != obj.getClass())
             return false;
         State other = (State) obj;
-        for (int i = 0; i < AStarSolver.SIZE; i++) {
-            for (int j = 0; j < AStarSolver.SIZE; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 if (this.board[i][j] != other.board[i][j])
                     return false;
             }
@@ -64,8 +68,8 @@ public class State implements Comparable<State> {
     @Override
     public int hashCode() {
         int hash = 7;
-        for (int i = 0; i < AStarSolver.SIZE; i++) {
-            for (int j = 0; j < AStarSolver.SIZE; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 hash = 31 * hash + board[i][j];
             }
         }
