@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.function.Function;
 
 public class EightPuzzle {
     // default parameters to use in class
@@ -17,7 +18,18 @@ public class EightPuzzle {
         // we need this because after user play with board,
         // we need to use first state of the board to solve.
         Board copyBoard = new Board(board);
+        // for making choice between manhattan and misplaced heuristic functions
+        Function<int[][], Integer> heuristic = null;
 
+        while (heuristic == null) {
+            if (StdDraw.isKeyPressed(KeyEvent.VK_1)) {
+                heuristic = HeuristicFunctions::manhattan;
+                StdDraw.pause(PAUSE_DURATION);
+            } else if (StdDraw.isKeyPressed(KeyEvent.VK_2)) {
+                heuristic = HeuristicFunctions::misplacedTiles;
+                StdDraw.pause(PAUSE_DURATION);
+            }
+        }
         // while loop to let user play on the board,
         // after user press enter, break the loop.
         while (true) {
@@ -32,9 +44,11 @@ public class EightPuzzle {
 
         // after user press enter, break while loop and program will solve copy board and show the solution
         StdDraw.clear(BACKGROUND_COLOR);
+        State.heuristicFunction = heuristic;
         String solutionPath = AStarSolver.solve(copyBoard); // use copy board to find solution
         assert solutionPath != null;
         showSolution(copyBoard, solutionPath); // show solution
+
     }
 
 
