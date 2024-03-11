@@ -3,8 +3,8 @@ import java.util.*;
 import java.util.List;
 
 public class AStarSolver {
-    public static final int SIZE = 3; // size of the board. Usage in 2d array: [SIZE]X[SIZE]
-    // since 2D representation of arrays in computers different then normal math, we need to understand that.
+    private static final int SIZE = 3; // size of the board. Usage in 2d array: [SIZE]X[SIZE]
+    // since 2D representation of arrays in computers different from normal math, we need to understand that.
 // first version of board
 //     0,0 | 0,1 | 0,2
 //     ----------------
@@ -12,7 +12,7 @@ public class AStarSolver {
 //     ----------------
 //     2,0 | 2,1 | 2,2
 // if we want to move empty cell up than we need to change 1,1 to 0,1
-// so X = -1 and Y= 0 means that move up. because 2d array logic is different than normal math,
+// so X = -1 and Y= 0 means that move up. because 2d array logic is different from normal math,
 // understanding this structure is important
 
     private static final int[] MOVE_X = {-1, 1, 0, 0}; // horizontal movement
@@ -104,22 +104,6 @@ public class AStarSolver {
         int temp = board[x1][y1];
         board[x1][y1] = board[x2][y2];
         board[x2][y2] = temp;
-    }
-
-    // Calculate the manhattan distance for the given board config.
-    public static int manhattan(int[][] board) {
-        int distance = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                int value = board[i][j];
-                if (value != 0) {
-                    int targetX = (value - 1) / SIZE;
-                    int targetY = (value - 1) % SIZE;
-                    distance += Math.abs(i - targetX) + Math.abs(j - targetY);
-                }
-            }
-        }
-        return distance;
     }
 
 
