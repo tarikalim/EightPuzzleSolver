@@ -114,38 +114,61 @@ public class Board {
     }
 
 
-    public void moveRight() {
+    // A method for moving the empty cell right
+    public boolean moveRight() {
+        // the empty cell cannot go right if it is already at the rightmost column
+        if (emptyCellCol == 2)
+            return false; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile on its right
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow][emptyCellCol + 1];
         tiles[emptyCellRow][emptyCellCol + 1] = null;
         // update the column index of the empty cell
         emptyCellCol++;
+        // return true as the empty cell is moved successfully
+        return true;
     }
 
-    public void moveLeft() {
+    // A method for moving the empty cell left
+    public boolean moveLeft() {
+        // the empty cell cannot go left if it is already at the leftmost column
+        if (emptyCellCol == 0)
+            return false; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile on its left
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow][emptyCellCol - 1];
         tiles[emptyCellRow][emptyCellCol - 1] = null;
         // update the column index of the empty cell
         emptyCellCol--;
+        // return true as the empty cell is moved successfully
+        return true;
     }
 
-    public void moveUp() {
+    // A method for moving the empty cell up
+    public boolean moveUp() {
+        // the empty cell cannot go up if it is already at the topmost row
+        if (emptyCellRow == 0)
+            return false; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile above it
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow - 1][emptyCellCol];
         tiles[emptyCellRow - 1][emptyCellCol] = null;
         // update the row index of the empty cell
         emptyCellRow--;
+        // return true as the empty cell is moved successfully
+        return true;
     }
 
-    public void moveDown() {
+    // A method for moving the empty cell down
+    public boolean moveDown() {
+        // the empty cell cannot go down if it is already at the bottommost row
+        if (emptyCellRow == 2)
+            return false; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile below it
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow + 1][emptyCellCol];
         tiles[emptyCellRow + 1][emptyCellCol] = null;
         // update the row index of the empty cell
         emptyCellRow++;
+        // return true as the empty cell is moved successfully
+        return true;
     }
-
 
     // A method for drawing the board by using the StdDraw library
     public void draw() {
