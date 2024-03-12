@@ -8,3 +8,5 @@ Note that if you don't have JRE 21.0.2 on your local machine and if you don't gi
 executable jar file. And also you need to mark jar file as "run as normal program".
 
 exact path to jar file: /EightPuzzleSolver/out/artifacts/Sliding_Puzzle_Game_jar/Sliding_Puzzle_Game.jar
+
+If you want to run program with your editor or IDE please setup the given stdraw.jar file as a library on you project workspace.
