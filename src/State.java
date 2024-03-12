@@ -9,6 +9,7 @@ public class State implements Comparable<State> {
     private int y;
     private int moves;
     private String path;
+    private int cost;
 
     public static Function<int[][], Integer> heuristicFunction = board -> 0;
 
@@ -21,6 +22,7 @@ public class State implements Comparable<State> {
         this.y = y;
         this.moves = moves;
         this.path = path;
+        this.cost = calculateCost();
     }
 
     public int[][] getBoard() {
@@ -42,8 +44,12 @@ public class State implements Comparable<State> {
     public String getPath() {
         return path;
     }
-
-    public int cost() {
+    public  int getCost(){
+        return cost;
+    }
+// calculate the total cost of current State and set this value to State
+// object parameter as cost to use it in priority queue implementation
+    public int calculateCost() {
         return moves + heuristicFunction.apply(board);
     }
 
@@ -81,6 +87,6 @@ public class State implements Comparable<State> {
     // when we add them to priority queue.
     @Override
     public int compareTo(State o) {
-        return Integer.compare(this.cost(), o.cost());
+        return Integer.compare(this.calculateCost(), o.getCost());
     }
 }
