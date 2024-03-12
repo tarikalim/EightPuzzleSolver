@@ -11,9 +11,9 @@ import java.util.function.Function;
 public class TestClass {
     public static void main(String[] args) {
         int[][] testTiles = {
-                {2, 5, 6},
-                {7, 1, 0},
-                {4, 8, 3}
+                {0, 1, 3},
+                {4, 2, 5},
+                {7, 8, 6}
         };
         int[][] testTiles2 = {
                 {1, 2, 3},
@@ -22,7 +22,7 @@ public class TestClass {
         };
         // Test for the solve method.
         Board testBoard = new Board(testTiles);
-        Function<int[][], Integer> Heuristic = HeuristicFunctions::manhattan;
+        Function<int[][], Integer> Heuristic = HeuristicFunctions::misplacedTiles;
         State.heuristicFunction = Heuristic;
         String solution = AStarSolver.solve(testBoard);
         System.out.println("Shortest path: " + solution);
