@@ -1,13 +1,11 @@
 <component name="libraryTable">
   <library name="stdlib">
     <CLASSES>
-      <root url="file://$USER_HOME$/Programming_Studio/EightPuzzleSolver/lib" />
+      <root url="jar://$PROJECT_DIR$/stdlib.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="file://$USER_HOME$/Programming_Studio/EightPuzzleSolver/lib" />
+      <root url="jar://$PROJECT_DIR$/stdlib.jar!/" />
     </SOURCES>
-    <jarDirectory url="file://$USER_HOME$/Programming_Studio/EightPuzzleSolver/lib" recursive="false" />
-    <jarDirectory url="file://$USER_HOME$/Programming_Studio/EightPuzzleSolver/lib" recursive="false" type="SOURCES" />
   </library>
 </component>
