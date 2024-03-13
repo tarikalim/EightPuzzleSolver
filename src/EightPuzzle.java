@@ -11,13 +11,14 @@ public class EightPuzzle {
     private static final Font TEXT_FONT = new Font("Arial", Font.BOLD, 20);
 
     private static String chosenHeuristic;
-    private static final String INFO_TEXT = "Welcome to 8 Puzzle Problem\n" +
-            "To solve puzzle with Manhattan Distance press '1'\n" +
-            "To solve puzzle with Misplaced Tiles press '2'\n" +
-            "After selecting one of them, you can see the puzzle\n" +
-            "You can play with board using arrow keys\n" +
-            "After you play, press 'ENTER' to see solution according to your heuristic function\n" +
-            "Program will visualise the solution and after that you can see the exact solution path. ";
+    private static final String INFO_TEXT = """
+            Welcome to 8 Puzzle Problem
+            To solve puzzle with Manhattan Distance press '1'
+            To solve puzzle with Misplaced Tiles press '2'
+            After selecting one of them, you can see the puzzle
+            You can play with board using arrow keys
+            After you play, press 'ENTER' to see solution according to your heuristic function
+            Program will visualise the solution and after that you can see the exact solution path.\s""";
     public static void main(String[] args) {
         setupStdDraw();
         StdDraw.clear(BACKGROUND_COLOR);
