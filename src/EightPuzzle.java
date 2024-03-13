@@ -26,13 +26,13 @@ public class EightPuzzle {
         drawMultilineText(INFO_TEXT, 2, 2.5, 0.1);
         StdDraw.show();
 
-        //  create main board object
+        //  create a main board object
 
         Board board = new Board();
 
-        // copy first board to find solution,
-        // we need this because after user play with board,
-        // we need to use first state of the board to solve.
+        // copy the first board to find a solution,
+        // we need this because after user plays with the board,
+        // we need to use the first state of the board to solve.
         Board copyBoard = new Board(board);
 
         // for making choice between manhattan and misplaced heuristic functions
@@ -51,7 +51,7 @@ public class EightPuzzle {
             }
         }
         // while loop to let user play on the board,
-        // after user press enter, break the loop.
+        // after user press enter, breaks the loop.
         while (true) {
             board.draw();
             StdDraw.show();
@@ -62,10 +62,10 @@ public class EightPuzzle {
             }
         }
 
-        // after user press enter, break while loop and program will solve copy board and show the solution
+        // after user press "Enter", break while loop and program will solve copy board and show the solution
         StdDraw.clear(BACKGROUND_COLOR);
         State.heuristicFunction = heuristic;
-        String solutionPath = AStarSolver.solve(copyBoard); // use copy board to find solution
+        String solutionPath = AStarSolver.solve(copyBoard); // use copy board to find a solution
         assert solutionPath != null;
         showSolution(copyBoard, solutionPath); // show solution
 
@@ -86,9 +86,9 @@ public class EightPuzzle {
         StdDraw.pause(PAUSE_DURATION);
     }
 
-    // method to show solution on the board
+    // method to show a solution on the board
     private static void showSolution(Board board, String solutionPath) {
-        // for loop to visualize solution using Board class move methods
+        // for loop to visualize a solution using Board class move methods
         // and solutionPath string to manage move methods.
         for (char move : solutionPath.toCharArray()) {
             switch (move) {
@@ -105,7 +105,7 @@ public class EightPuzzle {
                     board.moveRight();
                     break;
             }
-            // after each solution step showed on the board, show step as a string on the screen
+            // after each solution step showed on the board, show a step as a string on the screen
             // and draw the board using Board classes draw func.
             board.draw();
             StdDraw.setPenColor(Color.BLACK);
@@ -115,11 +115,11 @@ public class EightPuzzle {
             StdDraw.pause(750);
         }
 
-        // show complete solution path as a string after drawing solution
+        // show a complete solution path as a string after drawing solution
         StdDraw.clear(BACKGROUND_COLOR);
         StdDraw.setPenColor(Color.BLACK);
         StdDraw.setFont(TEXT_FONT);
-        StdDraw.text(1.95, 2, "Solution with "+ chosenHeuristic+ " :" + solutionPath);
+        StdDraw.text(1.95, 2, "Solution with " + chosenHeuristic + " :" + solutionPath);
         StdDraw.show();
     }
 
@@ -129,15 +129,15 @@ public class EightPuzzle {
         StdDraw.setScale(SCALE_MIN, SCALE_MAX);
         StdDraw.enableDoubleBuffering();
     }
+
     // method to split info text row by row
-    // because Std draw.text doesn't support this functionality.
+    // because StdDraw.text doesn't support this functionality.
     public static void drawMultilineText(String text, double x, double y, double lineHeight) {
         String[] lines = text.split("\n");
         for (int i = 0; i < lines.length; i++) {
             StdDraw.text(x, y - i * lineHeight, lines[i]);
         }
     }
-
 
 
 }
