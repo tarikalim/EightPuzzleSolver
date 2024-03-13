@@ -1,4 +1,4 @@
-/** Simple class to check Heuristic functions and cost method working fine
+/** Simple class to check Heuristic functions and cost method working fine,
  *  You can give Heuristic as a parameter to cost function to check each of them.
  */
 
