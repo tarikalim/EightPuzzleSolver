@@ -1,6 +1,6 @@
-// class to check correctness of heuristic functions
-// and correctness of cost method.
-import java.util.function.Function;
+/** Simple class to check Heuristic functions and cost method working fine
+ *  You can give Heuristic as a parameter to cost function to check each of them.
+ */
 
 public class TestClass2 {
     public static void main(String[] args) {

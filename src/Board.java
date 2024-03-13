@@ -1,6 +1,5 @@
 import java.awt.Color; // used for coloring the board
 import java.awt.Point; // used for the positions of the tiles and the empty cell
-import java.util.Objects;
 
 
 // A class that is used for modeling the board in the 8 puzzle.
@@ -38,11 +37,11 @@ public class Board {
 
         // create the tiles and the empty cell on the board by using the randomly
         // shuffled numbers from 0 to 8 and store them in the tile matrix
-        int arrayIndex = 0; // the index of the current number in the numbers array
+        int arrayIndex = 0; // the index of the current number in the number array
         // for each tile in the tile matrix
         for (int row = 0; row < 3; row++)
             for (int col = 0; col < 3; col++) {
-                // create a tile if the current value in the numbers array is not 0
+                // create a tile if the current value in the number array is not 0
                 if (numbers[arrayIndex] != 0)
                     // create a tile with the current number and assign this tile to
                     // the current cell of the tile matrix
@@ -58,7 +57,15 @@ public class Board {
             }
     }
 
-    // constructor method to copy created Board.
+    /**
+     * Constructor method to copy created Board.
+     * We define this constructor because in the main, after we created a Board object
+     * user can play and update Board config.
+     * To Be able to solve a first version of Board, after creating
+     * new Board, we are calling this constructor and copying the first created Board to use it in solver method.
+     *
+     * @param otherBoard copy of the first created board.
+     */
     public Board(Board otherBoard) {
         this.tiles = new Tile[otherBoard.tiles.length][otherBoard.tiles[0].length];
         for (int i = 0; i < otherBoard.tiles.length; i++) {
@@ -72,7 +79,12 @@ public class Board {
         this.emptyCellCol = otherBoard.emptyCellCol;
     }
 
-//     test constructor for the Board object
+    /**
+     * Test constructor, in this way, you can generate a manual 2d array as a representation of Board
+     * to test methods.
+     *
+     * @param initialTiles board configuration.
+     */
     public Board(int[][] initialTiles) {
         this.tiles = new Tile[initialTiles.length][initialTiles[0].length];
         for (int i = 0; i < initialTiles.length; i++) {
@@ -100,7 +112,14 @@ public class Board {
         }
     }
 
-    // Method to check that given array is solvable or not for the 8 Puzzle array
+    /**
+     * An inner method that count the inversion of the element in the given array,
+     * we are using this method with randomShuffling, in this way randomShuffling
+     * will loop if the generated configuration is not solvable, according to countInversion
+     *
+     * @param array Current states array representation.
+     * @return Inversion count of the given array.
+     */
     private int countInversions(int[] array) {
         int inversionCount = 0;
         for (int i = 0; i < array.length - 1; i++) {
@@ -115,59 +134,55 @@ public class Board {
 
 
     // A method for moving the empty cell right
-    public boolean moveRight() {
+    public void moveRight() {
         // the empty cell cannot go right if it is already at the rightmost column
         if (emptyCellCol == 2)
-            return false; // return false as the empty cell cannot be moved
+            return; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile on its right
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow][emptyCellCol + 1];
         tiles[emptyCellRow][emptyCellCol + 1] = null;
         // update the column index of the empty cell
         emptyCellCol++;
         // return true as the empty cell is moved successfully
-        return true;
     }
 
     // A method for moving the empty cell left
-    public boolean moveLeft() {
+    public void moveLeft() {
         // the empty cell cannot go left if it is already at the leftmost column
         if (emptyCellCol == 0)
-            return false; // return false as the empty cell cannot be moved
+            return; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile on its left
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow][emptyCellCol - 1];
         tiles[emptyCellRow][emptyCellCol - 1] = null;
         // update the column index of the empty cell
         emptyCellCol--;
         // return true as the empty cell is moved successfully
-        return true;
     }
 
     // A method for moving the empty cell up
-    public boolean moveUp() {
+    public void moveUp() {
         // the empty cell cannot go up if it is already at the topmost row
         if (emptyCellRow == 0)
-            return false; // return false as the empty cell cannot be moved
+            return; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile above it
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow - 1][emptyCellCol];
         tiles[emptyCellRow - 1][emptyCellCol] = null;
         // update the row index of the empty cell
         emptyCellRow--;
         // return true as the empty cell is moved successfully
-        return true;
     }
 
     // A method for moving the empty cell down
-    public boolean moveDown() {
+    public void moveDown() {
         // the empty cell cannot go down if it is already at the bottommost row
         if (emptyCellRow == 2)
-            return false; // return false as the empty cell cannot be moved
+            return; // return false as the empty cell cannot be moved
         // replace the empty cell with the tile below it
         tiles[emptyCellRow][emptyCellCol] = tiles[emptyCellRow + 1][emptyCellCol];
         tiles[emptyCellRow + 1][emptyCellCol] = null;
         // update the row index of the empty cell
         emptyCellRow++;
         // return true as the empty cell is moved successfully
-        return true;
     }
 
     // A method for drawing the board by using the StdDraw library
@@ -202,6 +217,12 @@ public class Board {
         return new Point(posX, posY);
     }
 
+
+    /**
+     * This method will generate a 2d array representation of a created Board object.
+     *
+     * @return currentState 2d array representation.
+     */
     public int[][] getCurrentBoardState() {
         int[][] currentState = new int[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {

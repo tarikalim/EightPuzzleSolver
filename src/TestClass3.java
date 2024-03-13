@@ -1,6 +1,7 @@
-// Class to compare heuristic functions and also performance of algorithm without any heuristic function
-import java.util.function.Function;
-
+/** This classes aim is comparing each heuristic accoring to their execution time.
+ *  We can also see that without heuristic, what will be the performance of A*.
+ * You can run this class and see the results from the terminal directly.
+ */
 public class TestClass3 {
     public static void main(String[] args) {
         int[][] testTiles = {
@@ -9,10 +10,9 @@ public class TestClass3 {
                 {4, 8, 3}
         };
 
-        // Test for the solve method with heuristic.
+        // Test for the solve method with manhattan.
         Board testBoardWithManhattan = new Board(testTiles);
-        Function<int[][], Integer> heuristic1 = HeuristicFunctions::manhattan;
-        State.heuristicFunction = heuristic1;
+        State.heuristicFunction = HeuristicFunctions::manhattan;
 
         long startTimeWithHeuristic = System.nanoTime();
         String solutionWithHeuristic = AStarSolver.solve(testBoardWithManhattan);
@@ -21,9 +21,9 @@ public class TestClass3 {
         long durationWithHeuristic = (endTimeWithHeuristic - startTimeWithHeuristic);
         System.out.println("Duration with manhattan: " + durationWithHeuristic + " nanosecond. Solution path: " + solutionWithHeuristic);
 
+        // Test for the solve method with misplacedTiles
         Board testBoardWithMisPlacedTiles = new Board(testTiles);
-        Function<int[][], Integer> heuristic2 = HeuristicFunctions::misplacedTiles;
-        State.heuristicFunction = heuristic2;
+        State.heuristicFunction = HeuristicFunctions::misplacedTiles;
 
         long startTimeWithMisPlacedTiles = System.nanoTime();
         String solutionWithMisPlacedTiles = AStarSolver.solve(testBoardWithMisPlacedTiles);
@@ -33,7 +33,7 @@ public class TestClass3 {
         System.out.println("Duration with Misplaced Tile: " + durationWithMissPlacedTiles + " nanosecond. Solution path: " + solutionWithMisPlacedTiles);
 
 
-        // Test for the solve method without heuristic.
+        // Test for the solve method without a heuristic.
         State.heuristicFunction = board -> 0;
         Board testBoardWithoutHeuristic = new Board(testTiles);
 
