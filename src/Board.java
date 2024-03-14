@@ -112,10 +112,11 @@ public class Board {
         }
     }
 
+
     /**
      * An inner method that count the inversion of the element in the given array,
      * we are using this method with randomShuffling, in this way randomShuffling
-     * will loop if the generated configuration is not solvable, according to countInversion
+     * will loop if the generated configuration is not solvable, according to countInversion.
      *
      * @param array Current states array representation.
      * @return Inversion count of the given array.
@@ -220,6 +221,9 @@ public class Board {
 
     /**
      * This method will generate a 2d array representation of a created Board object.
+     * This method is important because we don't want access directly to a Board object.
+     * In this way, we are making a copy of given Board's representation as an array and
+     * working on that copy.
      *
      * @return currentState 2d array representation.
      */
