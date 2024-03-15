@@ -1,4 +1,5 @@
 // Main algorithm class. Detailed explanation of every method and parameter are given.
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -44,7 +45,7 @@ public class AStarSolver {
      * Implementation of generating only solvable puzzle is explained in "Board" class.
      */
     public static String solve(Board board) {
-        int[][] initialStateArray = board.getCurrentBoardState();
+        int[][] initialStateArray = board.getCurrentBoard_Array();
         PriorityQueue<State> frontier = new PriorityQueue<>();
         Set<State> explored = new HashSet<>();
 
@@ -146,10 +147,10 @@ public class AStarSolver {
         for (State successor : successors) {
             if (!explored.contains(successor)) {
                 boolean isAdded = false;
-                for (State existingState : new ArrayList<>(frontier)) {
-                    if (existingState.equals(successor)) {
-                        if (existingState.getCost() > successor.getCost()) {
-                            frontier.remove(existingState);
+                for (State existingStatePQ : new ArrayList<>(frontier)) {
+                    if (existingStatePQ.equals(successor)) {
+                        if (existingStatePQ.getCost() > successor.getCost()) {
+                            frontier.remove(existingStatePQ);
                             frontier.add(successor);
                             isAdded = true;
                             break;

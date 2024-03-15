@@ -4,7 +4,7 @@
  * You can comment out and try any of the methods to check.
  */
 
-public class TestClass {
+public class TestClass1 {
     public static void main(String[] args) {
         int[][] testTiles = {
                 {0, 1, 3},

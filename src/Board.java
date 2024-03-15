@@ -64,19 +64,19 @@ public class Board {
      * To Be able to solve a first version of Board, after creating
      * new Board, we are calling this constructor and copying the first created Board to use it in solver method.
      *
-     * @param otherBoard copy of the first created board.
+     * @param copyBoard copy of the first created board.
      */
-    public Board(Board otherBoard) {
-        this.tiles = new Tile[otherBoard.tiles.length][otherBoard.tiles[0].length];
-        for (int i = 0; i < otherBoard.tiles.length; i++) {
-            for (int j = 0; j < otherBoard.tiles[i].length; j++) {
-                if (otherBoard.tiles[i][j] != null) {
-                    this.tiles[i][j] = new Tile(otherBoard.tiles[i][j]);
+    public Board(Board copyBoard) {
+        this.tiles = new Tile[copyBoard.tiles.length][copyBoard.tiles[0].length];
+        for (int i = 0; i < copyBoard.tiles.length; i++) {
+            for (int j = 0; j < copyBoard.tiles[i].length; j++) {
+                if (copyBoard.tiles[i][j] != null) {
+                    this.tiles[i][j] = new Tile(copyBoard.tiles[i][j]);
                 }
             }
         }
-        this.emptyCellRow = otherBoard.emptyCellRow;
-        this.emptyCellCol = otherBoard.emptyCellCol;
+        this.emptyCellRow = copyBoard.emptyCellRow;
+        this.emptyCellCol = copyBoard.emptyCellCol;
     }
 
     /**
@@ -227,7 +227,7 @@ public class Board {
      *
      * @return currentState 2d array representation.
      */
-    public int[][] getCurrentBoardState() {
+    public int[][] getCurrentBoard_Array() {
         int[][] currentState = new int[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {

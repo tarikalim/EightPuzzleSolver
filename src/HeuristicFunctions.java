@@ -4,7 +4,7 @@
  * and giving heuristic as a parameter to cost function to easy change between any heuristic.
  */
 public class HeuristicFunctions {
-    private static final int SIZE = 3; // Size of the board. Usage in 2d array: [SIZE]X[SIZE]
+    private static final int SIZE = 3;
     private static final int[][] GOAL = {
             {1, 2, 3},
             {4, 5, 6},

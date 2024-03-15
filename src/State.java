@@ -8,11 +8,11 @@ import java.util.function.Function;
 public class State implements Comparable<State> {
     private static final int SIZE = 3; // Size of the board. Usage in 2d array: [SIZE]X[SIZE]
 
-    private int[][] board;
-    private int x;
-    private int y;
-    private int moves;
-    private String path;
+    private int[][] board; // array representation of board
+    private int x; // empty cell x axis
+    private int y; // empty cell y axis
+    private int moves; // total moves to reach this state
+    private String path; // path to reach this state
     private int cost; // Total cost of reacihng this state, moves + value calculated by selected heuristic.
 
     /**
@@ -77,12 +77,7 @@ public class State implements Comparable<State> {
         return moves + heuristicFunction.apply(board);
     }
 
-    /**
-     * Calculates the total cost of reaching the current state.
-     * Combines the number of moves made with the heuristic value for the board configuration.
-     *
-     * @return The total cost of the state.
-     */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
