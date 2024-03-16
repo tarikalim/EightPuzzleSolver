@@ -9,6 +9,9 @@ public class TestClass3 {
                 {7, 1, 0},
                 {4, 8, 3}
         };
+int[] testTiles2 = {0,1,3,4,2,5,7,8,6};
+        int inversionCount = Board.countInversions(testTiles2);
+        System.out.println(inversionCount);
 
         // Test for the solve method with manhattan.
         Board testBoardWithManhattan = new Board(testTiles);
