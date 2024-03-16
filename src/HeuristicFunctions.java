@@ -46,8 +46,13 @@ public class HeuristicFunctions {
         int misplaced = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (board[i][j] != 0 && board[i][j] != GOAL[i][j]) {
-                    misplaced++;
+                int value = board[i][j];
+                if (value != 0) {
+                    int targetX = (value - 1) / SIZE;
+                    int targetY = (value - 1) % SIZE;
+                    if (i != targetX || j != targetY) {
+                        misplaced++;
+                    }
                 }
             }
         }
