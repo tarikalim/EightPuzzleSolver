@@ -40,7 +40,7 @@ This project uses A* search to find the shortest sequence of moves to solve the 
 
 2. **Open in your IDE**:
    Open the project in your favorite IDE like IntelliJ IDEA.
-3. 
+   
 3. **Run the Main Class**:
    Run the `EightPuzzle.java` file.
 
